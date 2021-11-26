@@ -13,6 +13,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,15 +39,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         addJupiterToScene()
         addMercuryToScene()
         addSunToScene()
-        addEarthText()
+      
+ 
+        let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            sceneView.addGestureRecognizer(tapGestureRecogniser)
+        
+        
     }
+    
+
+    
+        
+    
+    
     
     // MARK: - PLANETS
     
     let rotateAction = SCNAction.rotateBy(x: 0, y: 0.25, z: 0, duration: 2.0)
+    let rotateCloudAction = SCNAction.rotateBy(x: 0, y: 0.25, z: 0, duration: 0.5)
 
 
-    private func addSunToScene() {
+     func addSunToScene() {
         
         let sunSphere = SCNSphere(radius: 4)
         sunSphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_sun")
@@ -55,24 +71,62 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         sceneView.scene.rootNode.addChildNode(sunSphereNode)
 
+        
     
     }
     
     
-    private func addEarthToScene() {
+   private func addEarthToScene() {
         
         let earthSphere = SCNSphere(radius: 0.2)
         earthSphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_earth_daymap")
-        
+    
+       earthSphere.firstMaterial?.specular.contents = UIImage(named: "2k_earth_specular")
+       earthSphere.firstMaterial?.emission.contents = UIImage(named: "2k_earth_clouds")
+       earthSphere.firstMaterial?.normal.contents = UIImage(named: "2k_earth_normal")
+
+       earthSphere.firstMaterial?.shininess = 50
+       
+       
         let earthSphereNode = SCNNode(geometry: earthSphere)
+       earthSphereNode.name = "EarthNode"
 
         earthSphereNode.position = SCNVector3(0, 0, -1)
         earthSphereNode.runAction(SCNAction.repeatForever(rotateAction))
 
+
         sceneView.scene.rootNode.addChildNode(earthSphereNode)
-        
+
         
     }
+  
+    
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        let tappedView = sender.view as! SCNView
+        let touchLocation = sender.location(in: tappedView)
+        let hitTest = tappedView.hitTest(touchLocation, options: nil)
+        
+        if !hitTest.isEmpty {
+            let result = hitTest.first!
+            let name = result.node.name
+            let geometry = result.node.geometry
+            print("Tapped \(name) with geomtry \(geometry)")
+       
+            sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+              if node.name == "EarthNode" {
+                  node.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "2k_earth_nightmap")
+                  addEarthText()
+             
+            }
+        
+        }
+    }
+    }
+        
+    
+
+    
+    
     
     
     
@@ -152,9 +206,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     //Earth Text
     private func addEarthText() {
-        let text = SCNText(string: "Earth", extrusionDepth: 1.5)
+        let text = SCNText(string: "Earth", extrusionDepth: 5)
     let material = SCNMaterial()
-    material.diffuse.contents = UIColor.black
+    material.specular.contents = UIColor.black
     text.materials = [material]
         text.font = UIFont(name: "Arial", size: 8)
 
@@ -174,13 +228,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
@@ -190,6 +238,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        
 
         // Run the view's session
         sceneView.session.run(configuration)
