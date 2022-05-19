@@ -61,12 +61,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
      func addSunToScene() {
         
-        let sunSphere = SCNSphere(radius: 4)
+         let sunSphere = SCNSphere(radius: 0.4)
         sunSphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_sun")
         
         let sunSphereNode = SCNNode(geometry: sunSphere)
 
-        sunSphereNode.position = SCNVector3(-15, 0, -1)
+        sunSphereNode.position = SCNVector3(0, 0, -2)
         sunSphereNode.runAction(SCNAction.repeatForever(rotateAction))
 
         sceneView.scene.rootNode.addChildNode(sunSphereNode)
@@ -91,7 +91,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let earthSphereNode = SCNNode(geometry: earthSphere)
        earthSphereNode.name = "EarthNode"
 
-        earthSphereNode.position = SCNVector3(0, 0, -1)
+        earthSphereNode.position = SCNVector3(-2, 0, 0)
         earthSphereNode.runAction(SCNAction.repeatForever(rotateAction))
 
 
@@ -132,12 +132,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private func addMoonToScene() {
         
-        let moonSphere = SCNSphere(radius: 0.08)
+        let moonSphere = SCNSphere(radius: 0.06)
         moonSphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_moon")
         
         let moonSphereNode = SCNNode(geometry: moonSphere)
 
-        moonSphereNode.position = SCNVector3(0, 0, -2)
+        moonSphereNode.position = SCNVector3(-2, 0, 0.5)
         moonSphereNode.runAction(SCNAction.repeatForever(rotateAction))
 
         sceneView.scene.rootNode.addChildNode(moonSphereNode)
@@ -152,7 +152,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let marsSphereNode = SCNNode(geometry: marsSphere)
 
-        marsSphereNode.position = SCNVector3(1, 0, -1)
+        marsSphereNode.position = SCNVector3(2, 0, -3.5)
         marsSphereNode.runAction(SCNAction.repeatForever(rotateAction))
         
         sceneView.scene.rootNode.addChildNode(marsSphereNode)
@@ -160,12 +160,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     private func addMercuryToScene() {
         
-        let mercurySphere = SCNSphere(radius: 0.13)
+        let mercurySphere = SCNSphere(radius: 0.12)
         mercurySphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_mercury")
         
         let mercurySphereNode = SCNNode(geometry: mercurySphere)
 
-        mercurySphereNode.position = SCNVector3(-2, 0, -1)
+        mercurySphereNode.position = SCNVector3(1, 0, -2)
         mercurySphereNode.runAction(SCNAction.repeatForever(rotateAction))
         
         sceneView.scene.rootNode.addChildNode(mercurySphereNode)
@@ -180,7 +180,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let venueSphereNode = SCNNode(geometry: venusSphere)
 
-        venueSphereNode.position = SCNVector3(-1, 0, -1)
+        venueSphereNode.position = SCNVector3(-1, 0, -1.5)
         venueSphereNode.runAction(SCNAction.repeatForever(rotateAction))
         
         sceneView.scene.rootNode.addChildNode(venueSphereNode)
@@ -190,12 +190,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private func addJupiterToScene() {
         
-        let jupiterSphere = SCNSphere(radius: 1)
+        let jupiterSphere = SCNSphere(radius: 0.35)
         jupiterSphere.firstMaterial?.diffuse.contents = UIImage(named: "8k_jupiter")
         
         let jupiterSphereNode = SCNNode(geometry: jupiterSphere)
 
-        jupiterSphereNode.position = SCNVector3(5, 0, -1)
+        jupiterSphereNode.position = SCNVector3(1, 0, -5)
         jupiterSphereNode.runAction(SCNAction.repeatForever(rotateAction))
         
         sceneView.scene.rootNode.addChildNode(jupiterSphereNode)
